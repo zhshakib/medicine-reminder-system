@@ -37,7 +37,7 @@ def login():
             session['user_id'] = user["id"]
             session['username'] = user["name"]
 
-            return redirect(url_for('index'))
+            return redirect(url_for('dashboard.home'))
 
         flash('Invalid email or password', 'danger')
 
