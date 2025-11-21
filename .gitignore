@@ -3,6 +3,10 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+
+# We are not uploading the LocalDatabase on Github!
+*.db
+
 # C extensions
 *.so
 
