@@ -1,7 +1,116 @@
 {% extends "base.html" %}
-
 {% block content %}
 <h2>Welcome, {{ username }}!</h2>
-<p>This is your dashboard.</p>
-<a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logout</a>
+
+<!-- Add Medicine Button -->
+<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addMedicineModal">
+    Add Medicine
+</button>
+
+<!-- Medicine Table -->
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Dosage</th>
+            <th>Times</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for med in medicines %}
+        <tr>
+            <td>{{ med['name'] }}</td>
+            <td>{{ med['dosage'] }}</td>
+            <td>{{ med['times'] }}</td>
+            <td>{{ med['description'] }}</td>
+            <td>
+                <!-- Edit Button -->
+                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" 
+                        data-bs-target="#editMedicineModal" 
+                        data-id="{{ med['id'] }}" 
+                        data-name="{{ med['name'] }}" 
+                        data-dosage="{{ med['dosage'] }}" 
+                        data-times="{{ med['times'] }}" 
+                        data-description="{{ med['description'] }}">
+                    Edit
+                </button>
+
+                <!-- Delete Form -->
+                <form action="{{ url_for('dashboard.delete_medicine', med_id=med['id']) }}" method="POST" style="display:inline;">
+                    <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Add Medicine Modal -->
+<div class="modal fade" id="addMedicineModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="POST" action="{{ url_for('dashboard.add_medicine') }}">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Medicine</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input name="name" class="form-control mb-2" placeholder="Medicine Name" required>
+          <input name="dosage" class="form-control mb-2" placeholder="Dosage (e.g., 500mg)">
+          <input name="times" class="form-control mb-2" placeholder="Times (e.g., 9 AM, 2 PM)">
+          <textarea name="description" class="form-control mb-2" placeholder="Description"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Medicine Modal -->
+<div class="modal fade" id="editMedicineModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="POST" id="editMedicineForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Medicine</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input name="name" class="form-control mb-2" placeholder="Medicine Name" required>
+          <input name="dosage" class="form-control mb-2" placeholder="Dosage">
+          <input name="times" class="form-control mb-2" placeholder="Times">
+          <textarea name="description" class="form-control mb-2" placeholder="Description"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- JS to populate Edit Modal -->
+<script>
+var editModal = document.getElementById('editMedicineModal')
+editModal.addEventListener('show.bs.modal', function (event) {
+  var button = event.relatedTarget
+  var id = button.getAttribute('data-id')
+  var name = button.getAttribute('data-name')
+  var dosage = button.getAttribute('data-dosage')
+  var times = button.getAttribute('data-times')
+  var description = button.getAttribute('data-description')
+
+  var form = document.getElementById('editMedicineForm')
+  form.action = '/dashboard/medicine/edit/' + id
+  form.elements['name'].value = name
+  form.elements['dosage'].value = dosage
+  form.elements['times'].value = times
+  form.elements['description'].value = description
+})
+</script>
+
 {% endblock %}
