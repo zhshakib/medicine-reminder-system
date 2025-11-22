@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from app.database import init_db
 from app.routes.auth_routes import auth_bp
 from app.routes.dashboard_routes import dashboard_bp
@@ -15,6 +15,6 @@ def create_app():
 
     @app.route('/')
     def index():
-        return 'Hello, World!'
+        return render_template('index.html')
     
     return app
