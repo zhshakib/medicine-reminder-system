@@ -77,3 +77,12 @@ section {
   margin-right: 10px;
   margin-bottom: 10px;
 }
+
+
+footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: gray;
+  color: wheat;
+}
