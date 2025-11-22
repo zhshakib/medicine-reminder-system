@@ -1,0 +1,79 @@
+.sidebar {
+  width: 220px;
+  height: 100vh;
+}
+
+.sidebar .nav-link {
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #495057;
+  text-decoration: none;
+}
+
+.content {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+.btn-sm {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+/* Auth Section */
+.box {
+  width: 60%;
+  margin: 100px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 0px 10px gray;
+}
+
+.box input {
+  width: 100%;
+  padding: 8px;
+  margin: 15px 0;
+}
+
+.box button {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0px;
+  background: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.box a {
+  color: blue;
+}
+
+/* Dashboard */
+
+.content {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Sections */
+section {
+  margin-bottom: 30px;
+}
+
+/* Buttons */
+.btn-sm {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}

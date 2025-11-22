@@ -1,51 +1,56 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Welcome, {{ username }}!</h2>
 
-<!-- Add Medicine Button -->
-<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addMedicineModal">
-    Add Medicine
-</button>
+<div class="content p-4 w-100">
+    <section id="profile">
+        <h3>Hello {{username}}</h3>
+    </section>
+    <button class="btn btn-primary mb-3 w-100" data-bs-toggle="modal" data-bs-target="#addMedicineModal">
+    Add Medicine </button>
+    <!-- Medicine List -->
+    <section id="medicine-list">
+        <h3>User Medicine List</h3>
+        <!-- Medicine Table -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Dosage</th>
+                    <th>Times</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for med in medicines %}
+                <tr>
+                    <td>{{ med['name'] }}</td>
+                    <td>{{ med['dosage'] }}</td>
+                    <td>{{ med['times'] }}</td>
+                    <td>{{ med['description'] }}</td>
+                    <td>
+                        <!-- Edit Button -->
+                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#editMedicineModal" data-id="{{ med['id'] }}" data-name="{{ med['name'] }}"
+                            data-dosage="{{ med['dosage'] }}" data-times="{{ med['times'] }}"
+                            data-description="{{ med['description'] }}">
+                            Edit
+                        </button>
 
-<!-- Medicine Table -->
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Dosage</th>
-            <th>Times</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for med in medicines %}
-        <tr>
-            <td>{{ med['name'] }}</td>
-            <td>{{ med['dosage'] }}</td>
-            <td>{{ med['times'] }}</td>
-            <td>{{ med['description'] }}</td>
-            <td>
-                <!-- Edit Button -->
-                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" 
-                        data-bs-target="#editMedicineModal" 
-                        data-id="{{ med['id'] }}" 
-                        data-name="{{ med['name'] }}" 
-                        data-dosage="{{ med['dosage'] }}" 
-                        data-times="{{ med['times'] }}" 
-                        data-description="{{ med['description'] }}">
-                    Edit
-                </button>
-
-                <!-- Delete Form -->
-                <form action="{{ url_for('dashboard.delete_medicine', med_id=med['id']) }}" method="POST" style="display:inline;">
-                    <button class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                        <!-- Delete Form -->
+                        <form action="{{ url_for('dashboard.delete_medicine', med_id=med['id']) }}" method="POST"
+                            style="display:inline;">
+                            <button class="btn btn-danger btn-sm"
+                                onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <a class="btn btn-danger w-100" href="{{ url_for('auth.logout') }}">Logout</a>
+</div>
 
 <!-- Add Medicine Modal -->
 <div class="modal fade" id="addMedicineModal" tabindex="-1" aria-hidden="true">
@@ -70,6 +75,7 @@
   </div>
 </div>
 
+
 <!-- Edit Medicine Modal -->
 <div class="modal fade" id="editMedicineModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
@@ -93,6 +99,7 @@
   </div>
 </div>
 
+
 <!-- JS to populate Edit Modal -->
 <script>
 var editModal = document.getElementById('editMedicineModal')
@@ -112,5 +119,6 @@ editModal.addEventListener('show.bs.modal', function (event) {
   form.elements['description'].value = description
 })
 </script>
+
 
 {% endblock %}

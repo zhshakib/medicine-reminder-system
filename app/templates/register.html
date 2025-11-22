@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Register</h2>
-<form method="POST">
-    <input name="name" class="form-control mb-2" placeholder="Name" required>
-    <input name="email" class="form-control mb-2" placeholder="Email" type="email" required>
-    <input name="password" class="form-control mb-2" placeholder="Password" type="password" required>
-    <button class="btn btn-primary">Register</button>
-    <span>Already have an account! <a class="text-primary text-decoration-none fw-bold ml-2" href="{{ url_for('auth.register') }}">Login Now</a></span>
-</form>
+<div class="box">
+    <h2>Register</h2>
+    <form method="POST">
+        <input name="name" class="form-control mb-2" placeholder="Name" required>
+        <input name="email" class="form-control mb-2" placeholder="Email" type="email" required>
+        <input name="password" class="form-control mb-2" placeholder="Password" type="password" required>
+        <button class="btn btn-primary">Register</button>
+        <span>Already have an account! <a class="text-primary text-decoration-none fw-bold ml-2"
+                href="{{ url_for('auth.login') }}">Login Now</a></span>
+    </form>
+</div>
 {% endblock %}
